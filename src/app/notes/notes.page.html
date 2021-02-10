@@ -1,0 +1,31 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="cheese">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  <ion-title>Notes</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-fab vertical="top" horizontal="end" slot="fixed">
+    <ion-fab-button color="yellow" (click)="addModal()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+      <ion-list>
+         <ion-item  *ngFor="let data of Data"  lines="full"  (click)="viewNote(data)">
+          <ion-label>
+            <div (press)="onPress(data, $event)">
+             <h3>{{data.notes}}</h3>
+             <p>{{data.dateCreated}}</p>
+            </div>
+         </ion-label> 
+           <ion-note slot="end"><ion-icon  name="chevron-forward-sharp"></ion-icon></ion-note>
+        </ion-item>
+      </ion-list>
+        <ion-card *ngIf="Data.length===0" class="no-note">
+          <ion-card-content>
+            <p> No Chesseee</p>
+          </ion-card-content>
+        </ion-card>
+</ion-content>

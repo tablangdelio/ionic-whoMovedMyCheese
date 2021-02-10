@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar color="cheese">
+      <ion-buttons slot="end">
+         <ion-button routerLink="/home">
+             <ion-icon name="close-outline"></ion-icon>
+         </ion-button>
+      </ion-buttons>
+    <ion-title size="medium " class="ion-text-center" >Search</ion-title>
+  </ion-toolbar>
+
+  <ion-toolbar>
+          <ion-searchbar type="text" debounce="500"  (ionChange) = "_ionchange($event); value = $event.target.value" ></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid >
+    <ion-row>
+    <ion-col class="ion-padding" >
+      <div *ngFor="let searchResult of searchRes; "  >
+          <p  [innerHTML] = "searchTextHighlight(searchResult.read) " > </p>
+      </div>
+          <p *ngIf="isEmptyResult(searchRes)"> No result found</p>
+    </ion-col>
+    </ion-row>  
+  </ion-grid>
+</ion-content>

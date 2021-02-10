@@ -1,20 +1,145 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
+<ion-menu side="start" menuId="first"  contentId="main" swipe-gesture>
+  <ion-header>
+    <ion-toolbar color="cheese">
+      <ion-title class="ion-text-center">Settings</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <ion-item routerLink="/notes">
+        Notes<ion-icon slot="end" name="pencil-outline"></ion-icon>
+      </ion-item>
+      <ion-item>
+        DarkMode <ion-icon name="moon-sharp" slot="end"></ion-icon>
+       <ion-toggle class="cheese-toggle"slot="end" [(ngModel)]="darkMode" (ionChange)= "darkModeSwitch(darkMode);"></ion-toggle>  
+      </ion-item>
+      <ion-item>
+          <ion-range  color="danger" pin="true" min="10" max="50" snaps="true" [(ngModel)]="fontSize" (ionChange)="fontSizeMeter($event)">
+            <ion-icon slot ="start"name="information-outline"></ion-icon>
+            <ion-icon slot="end"name="add-outline"></ion-icon>
+          </ion-range>
+      </ion-item>
+    </ion-list>
+    </ion-content>
+</ion-menu>
+<ion-router-outlet id="main"></ion-router-outlet>
+
+
+<ion-header [translucent]="true"> 
+  <ion-toolbar color="cheese">
+    <ion-buttons  routerLink="/search" slot="end" >
+      <ion-button>
+        <ion-icon style="zoom:1.2"name="search-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+     <ion-buttons slot="start">
+       <ion-button>
+        <ion-menu-button><ion-icon name="settings-outline"></ion-icon> </ion-menu-button>
+       </ion-button>
+     </ion-buttons>
+     <ion-title size="medium" class="ion-text-center">Who Move My Cheese </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content *ngFor="let book of Books_data "  [style.font-size.px]="fontSize">
+ 
+              <ion-img  class="cover-image" src="/assets/cover.png"></ion-img>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+ <ion-grid >
+   <ion-row>
+      <ion-col  class="ion-padding">
+        <div class="ion-text-center">
+          <h1 [style.font-size.px]="fontSize">Introduction</h1>
+          <h3 [style.font-size.px]="fontSize" >{{book.introduction.title}}</h3>
+          <small [innerHTML]="book.introduction.subtitle">{{book.introduction.subtitle}}</small>
+        </div>
+        <div *ngFor="let reads of book.introduction.read">
+            <p class="ion-text-wrap"> {{reads.r}}</p>
+        </div>
+      </ion-col>
+   </ion-row>
+ </ion-grid>
+
+
+ <ion-grid>
+   <ion-row>
+     <ion-col class="ion-padding">
+      <div class="ion-text-center">
+        <h5 [style.font-size.px]="fontSize">{{book.table_contents.title}}</h5>
+        <small [style.font-size.px]="fontSize" >{{book.table_contents.subtitle}}</small>
+      </div> 
+      <ion-list [style.font-size.px]="fontSize">
+          <ion-item *ngFor="let list of book.table_contents.lists">
+              <ion-label  class="ion-text-wrap" >{{list.r}}</ion-label>
+          </ion-item>
+      </ion-list>
+     </ion-col>
+   </ion-row>
+ </ion-grid>
+
+ <ion-grid>
+   <ion-row>
+     <ion-col>
+       <div  class="ion-text-center" [style.font-size.px]="fontSize">
+         <h1>{{book.parts.title}}</h1>
+         <p>{{book.parts.subtitle}}</p>
+         <p *ngFor="let part of book.parts.partsofall" [innerHTML]="part.r"> {{part.r}}</p>
+       </div>
+     </ion-col>
+   </ion-row>
+ </ion-grid>
+ <ion-grid>
+   <ion-row>
+   <ion-col class="ion-padding">
+    <div class ="ion-text-center" [style.font-size.px]="fontSize">
+      <h1>{{book.gatherings.title}}</h1>
+      <small>{{book.gatherings.subtitle}}</small> 
+    </div>
+  
+         <p *ngFor="let gathering of book.gatherings.gatheringsRead">{{gathering.r}}</p>
+ 
+   </ion-col>
+   </ion-row>
+ </ion-grid>
+<ion-grid>
+  <ion-row>
+    <ion-col size="12"class="ion-padding">
+      <div class ="ion-text-center" [style.font-size.px]="fontSize">
+        <h1 [innerHTML]="book.theStory.title">{{book.theStory.title}}</h1>
+      </div>
+        <p *ngFor="let story of book.theStory.theStoryRead" > {{story.r}}
+          <span *ngFor="let wow of story.rR">
+            <h3 class="">{{wow.title}}</h3><small [innerHTML]="wow.sTitle">{{wow.sTitle}}</small>
+          </span>
+          <ion-img [src] = "story.src"></ion-img>
+        </p>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
+<ion-grid>
+  <ion-row>
+    <ion-col size="12" class="ion-padding">
+      <div class ="ion-text-center" [style.font-size.px]="fontSize">
+        <h3 [innerHTML]="book.discussion.title">{{book.discussion.title}}</h3>
+        <small>{{book.discussion.subtitle}}</small> 
+      </div>
+        <p *ngFor="let story of book.discussion.discussionRead" > {{story.r}}</p>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+<ion-grid>
+  <ion-row>
+      <ion-col class="ion-padding">
+        <ion-img src="/assets/s.png"></ion-img>
+        <p [style.font-size.px]="fontSize">
+            <strong>DR SPENCER JOHNSON</strong><br>
+          <small> Foreword by KENNETH  BLANCHARD PH.D.</small><br>
+            From the BestSelling co-author of<br>
+            <i>The one Minute Manager</i> <br>
+          <small><strong> Thank You!</strong></small>
+        </p>
+      </ion-col>
+  </ion-row>
+</ion-grid>
 </ion-content>

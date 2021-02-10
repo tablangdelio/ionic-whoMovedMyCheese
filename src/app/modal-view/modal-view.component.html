@@ -1,0 +1,20 @@
+<ion-header  [translucent]="true">
+  <ion-toolbar color="cheese">
+    <ion-title class="ion-text-center ion-no-border">Who Moved My Cheese?</ion-title>
+    <ion-buttons slot="end">
+      <ion-button  (click)="dismissModal()" >Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <div class="ion-text-center">
+          <p><i>{{ note }}</i></p>
+           <small>{{ date }}</small>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
